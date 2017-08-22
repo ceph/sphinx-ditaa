@@ -126,7 +126,7 @@ def render_ditaa(self, code, options, prefix='ditaa'):
 
     try:
         p = Popen(ditaa_args, stdout=PIPE, stdin=PIPE, stderr=PIPE)
-    except OSError, err:
+    except OSError as err:
         if err.errno != ENOENT:   # No such file or directory
             raise
         self.builder.warn('ditaa command %r cannot be run (needed for ditaa '
@@ -139,11 +139,11 @@ def render_ditaa(self, code, options, prefix='ditaa'):
         # Ditaa may close standard input when an error occurs,
         # resulting in a broken pipe on communicate()
         stdout, stderr = p.communicate(code)
-    except OSError, err:
+    except OSError as err:
         if err.errno != EPIPE:
             raise
         wentWrong = True
-    except IOError, err:
+    except IOError as err:
         if err.errno != EINVAL:
             raise
         wentWrong = True
@@ -162,7 +162,7 @@ def render_ditaa_html(self, node, code, options, prefix='ditaa',
                     imgcls=None, alt=None):
     try:
         fname, outfn = render_ditaa(self, code, options, prefix)
-    except DitaaError, exc:
+    except DitaaError as exc:
         raise nodes.SkipNode
 
     inline = node.get('inline', False)
